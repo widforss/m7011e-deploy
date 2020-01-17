@@ -1,0 +1,11 @@
+- name: Set owners
+  postgresql_owner:
+    db: "{{ item.db | default(omit) }}"
+    new_owner: "{{ item.owner }}"
+    obj_name: "{{ item.name }}"
+    obj_type: "{{ item.type }}"
+  with_items: "{{ postgresql_owners }}"
+  become: true
+  become_user: "{{ postgresql_user }}"
+  vars:
+    ansible_ssh_pipelining: true

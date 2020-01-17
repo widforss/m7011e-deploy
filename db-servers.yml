@@ -1,0 +1,13 @@
+---
+- name: Install python
+  hosts: db_servers
+  gather_facts: no
+  pre_tasks:
+  - name: Install python
+    raw: apt-get -y update && apt-get -y install python
+
+- name: Set up database
+  hosts: db_servers
+  roles:
+    - general
+    - db-servers

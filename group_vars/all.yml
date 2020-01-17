@@ -1,24 +1,14 @@
----
 
-# Domain name for your application
-domain: 
+deploy_key: keys/webdyn-deploy
+deploy_key_pub: keys/webdyn-deploy.pub
 
-# Git repository for your NodeJS application
-app_repo: https://github.com/JamesTheHacker/nodebox-testapp
+database_name: webdyn
+privileged_db_user: webdyn
+restricted_db_user: webdyn-restricted
 
-# Application entry point
-entry_point: server.js
+# Add any secret password to the accounts
+privileged_db_pw: 
+restricted_db_pw: 
 
-# Digital Ocean API key
-api_token: 
-
-# An SSH key added to Digital Ocean
-ssh_key_id:
-
-# Unprivileged user
-user: web
-user_pass: ProBa92BBL23eeN034444Se12340cUR203e4124daade
-
-# The following variables are required for Let's Encrypt
-email: your@email.com
-country: GB
+# URL to personal public SSH key for access to server accounts
+key_url: 

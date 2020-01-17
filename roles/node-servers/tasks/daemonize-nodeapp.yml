@@ -6,8 +6,24 @@
     owner: root
     group: root
 
-- name: Adding service to boot
+- name: Created ssh tunnel service
+  template:
+    src: templates/tunnel.j2
+    dest: /etc/systemd/system/tunnel.service
+    owner: root
+    group: root
+
+- name: Adding ssh tunnel service to boot
+  systemd:
+    enabled: yes
+    name: tunnel
+    state: started
+
+- name: Adding nodeapp service to boot
   systemd:
     enabled: yes
     name: nodeapp
-    state: started
+    state: restarted
+  notify:
+    - restart-haproxy
+

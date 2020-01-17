@@ -1,0 +1,39 @@
+---
+
+# Domain name for your application
+domain: 
+www_domain: 
+
+# Git repository for your NodeJS application
+app_repo: https://github.com/widforss/m7011e.git
+
+# Application entry point
+entry_point: server.js
+
+# Digital Ocean API key
+api_token:
+
+# Unprivileged user
+user: web
+user_pass: 
+
+# The following variables are required for Let's Encrypt
+email: 
+country: 
+
+TunnelLocalPort: 32154
+TunnelRemotePort: 5432
+TunnelTarget: 
+
+# API server settings:
+api_settings:
+  - { template: replaceSqlUsername, value: "'{{ restricted_db_user }}'" }
+  - { template: replaceSqlHostname, value: "'localhost'" }
+  - { template: replaceSqlDatabaseName, value: "'{{ database_name }}'" }
+  - { template: replaceSqlPassword, value: "'{{ restricted_db_pw }}'" }
+  - { template: replaceSqlPortNumber, value: "{{ TunnelLocalPort }}" }
+  - { template: replaceSqlSslBoolean, value: "false" }
+  - { template: replaceSmtpSender, value: "''" }
+  - { template: replaceSmtpUsername, value: "''" }
+  - { template: replaceSmtpPassword, value: "''" }
+  - { template: replaceSmtpUrl, value: "''" }

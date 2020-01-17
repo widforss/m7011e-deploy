@@ -1,0 +1,22 @@
+---
+- name: Enable SSH
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+
+- name: Enable HTTP
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+
+- name: Enable HTTPS
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp
+
+- name: Enabling ufw
+  ufw:
+    state: enabled

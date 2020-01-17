@@ -1,0 +1,12 @@
+---
+- name: Install python
+  hosts: node_servers
+  gather_facts: no
+  pre_tasks:
+  - name: Install python
+    raw: apt-get -y update && apt-get -y install python
+
+- hosts: node_servers
+  roles:
+    - general
+    - node-servers

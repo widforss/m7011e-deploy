@@ -19,12 +19,12 @@ defaults
   option http-server-close
 
 frontend www-http
-  bind {{ hostvars.localhost.server.droplet.ip_address }}:80
+  bind {{ ansible_default_ipv4.address }}:80
   reqadd X-Forwarded-Proto:\ http
   default_backend www-backend
 
 frontend www-https
-  bind {{ hostvars.localhost.server.droplet.ip_address }}:443 ssl crt /etc/haproxy/certs/{{ domain }}.pem
+  bind {{ ansible_default_ipv4.address }}:443 ssl crt /etc/haproxy/certs/{{ domain }}.pem
   reqadd X-Forwarded-Proto:\ https
   default_backend www-backend
 
@@ -34,6 +34,4 @@ backend www-backend
   balance roundrobin
   stick-table type ip size 200k expire 100m
   stick on src
-  server www-1 127.0.0.1:5001 check
-  server www-2 127.0.0.1:5002 check
-  server www-3 127.0.0.1:5003 check
+  server www-1 127.0.0.1:8008 check

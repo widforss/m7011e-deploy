@@ -1,0 +1,82 @@
+---
+# Databases to ensure exist.
+postgresql_databases: 
+ - name: "{{ database_name }}"
+
+postgresql_schemas:
+ - name: postgis
+   db: "{{ database_name }}"
+   owner: "{{ privileged_db_user }}" 
+ - name: uuid
+   db: "{{ database_name }}"
+   owner: "{{ privileged_db_user }}"
+ - name: trigram
+   db: "{{ database_name }}"
+   owner: "{{ privileged_db_user }}"
+
+postgresql_extensions:
+ - name: postgis
+   schema: postgis
+   db: "{{ database_name }}"
+ - name: uuid-ossp
+   schema: uuid
+   db: "{{ database_name }}"
+ - name: pg_trgm
+   schema: trigram
+   db: "{{ database_name }}"
+
+# Host based authentication (hba) entries to be added to the pg_hba.conf. This
+# variable's defaults reflect the defaults that come with a fresh installation.
+postgresql_hba_entries:
+  - {type: local, database: all, user: postgres, auth_method: peer}
+  - {type: local, database: all, user: all, auth_method: md5}
+  - {type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5}
+
+# Users to ensure exist.
+postgresql_users:
+ - name: "{{ privileged_db_user }}"
+   password: "{{ privileged_db_pw }}"
+   encrypted: yes
+   priv: ALL
+   db: "{{ database_name }}"
+ - name: "{{ restricted_db_user }}"
+   password: "{{ restricted_db_pw }}"
+   encrypted: yes
+
+postgresql_privs:
+ - roles: "{{ restricted_db_user }}"
+   privs: EXECUTE
+   objs: FUNCTIONS
+   type: default_privs
+   schema: public
+   db: "{{ database_name }}"
+
+ - roles: "{{ restricted_db_user }}"
+   privs: USAGE
+   objs: postgis
+   type: schema
+   db: "{{ database_name }}"
+ - roles: "{{ restricted_db_user }}"
+   privs: EXECUTE
+   objs: ALL_IN_SCHEMA
+   type: function
+   schema: postgis
+   db: "{{ database_name }}"
+
+postgresql_owners:
+ - name: postgis
+   type: schema
+   owner: "{{ privileged_db_user }}"
+   db: "{{ database_name }}"
+ - name: uuid
+   type: schema
+   owner: "{{ privileged_db_user }}"
+   db: "{{ database_name }}"
+ - name: trigram
+   type: schema
+   owner: "{{ privileged_db_user }}"
+   db: "{{ database_name }}"
+
+# Unprivileged user
+user: sql
+user_pass: 

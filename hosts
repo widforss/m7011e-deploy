@@ -1,2 +1,5 @@
-[digitalocean]
-localhost ansible_connection=local
+[node_servers]
+api-server ansible_host=webdyn.antarkt.is ansible_port=22 ansible_user=root
+
+[db_servers]
+db-server ansible_host=db.webdyn.antarkt.is ansible_port=22 ansible_user=root
