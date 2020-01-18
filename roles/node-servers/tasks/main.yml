@@ -9,6 +9,6 @@
       - graphicsmagick
 
   - include: haproxy.yml
-  #- include: letsencrypt-dns.yml
+  - include: letsencrypt-dns.yml
   - include: deploy.yml
   - include: daemonize-nodeapp.yml
